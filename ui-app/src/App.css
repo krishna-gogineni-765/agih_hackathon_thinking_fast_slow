@@ -1,0 +1,41 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.question-container {
+  flex: 1;
+  padding: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.code-chat-container {
+  display: flex;
+  flex: 2;
+}
+
+.code-editor {
+  flex: 1;
+  border-right: 1px solid #ccc;
+}
+
+.chat-interface {
+  flex: 0.5;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.chat-messages {
+  margin-top: 20px;
+}
+
+.chat-message {
+  margin-bottom: 15px;
+}
+
+.ai-message {
+  background-color: #f1f1f1;
+  padding: 10px;
+  border-radius: 5px;
+}
