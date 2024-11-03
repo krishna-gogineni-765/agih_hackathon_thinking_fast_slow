@@ -1,26 +1,36 @@
+// App.js
 import React from 'react';
 import './App.css';
 import QuestionDescription from './components/QuestionDescription';
 import CodeEditor from './components/CodeEditor';
 import ChatInterface from './components/ChatInterface';
+import axios from 'axios';
 
 function App() {
   const [chatMessages, setChatMessages] = React.useState([]);
 
-  const handleCodeChange = async (code) => {
-    // Mock API call to get AI response
-    const response = await fetchAIResponse(code);
+  const handleCodeChange = async (currentCode, changedLineCode) => {
+    const response = await fetchAIResponse(currentCode, changedLineCode);
     setChatMessages((prevMessages) => [...prevMessages, response]);
   };
 
-  const fetchAIResponse = async (code) => {
-    // Simulate backend processing
-    // In a real app, you'd use axios or fetch to call your backend API
-    // For this example, we'll return a mock response
-    return {
-      sender: 'ai',
-      message: `Here's a hint based on your code: ${code.slice(-20)}`,
-    };
+  const fetchAIResponse = async (currentCode, changedLineCode) => {
+    try {
+      const response = await axios.post('http://127.0.0.1:3001/generate-hint', {
+        current_code: currentCode,
+        changed_line_code: changedLineCode,
+      });
+      return {
+        sender: 'ai',
+        message: response.data.hint,
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        sender: 'ai',
+        message: 'Error generating hint.',
+      };
+    }
   };
 
   return (
