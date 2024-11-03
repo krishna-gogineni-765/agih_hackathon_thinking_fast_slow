@@ -1,13 +1,30 @@
-import React from 'react';
+// QuestionDescription.js
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function QuestionDescription() {
+  const [question, setQuestion] = useState({ title: '', description: '' });
+
+  useEffect(() => {
+    const fetchQuestion = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:3001/get-question');
+        setQuestion(response.data);
+      } catch (error) {
+        console.error('Error fetching question:', error);
+      }
+    };
+
+    fetchQuestion();
+  }, []);
+
   return (
     <div className="question-description">
-      <h2>Two Sum</h2>
-      <p>
-        Given an array of integers <code>nums</code> and an integer <code>target</code>, return indices of the two numbers such that they add up to <code>target</code>.
-      </p>
-      {/* Add more question details as needed */}
+      <h2>{question.title}</h2>
+      <div
+        className="question-content"
+        dangerouslySetInnerHTML={{ __html: question.description }}
+      />
     </div>
   );
 }
